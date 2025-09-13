@@ -25,15 +25,6 @@ char activeMode[10];
 int windowHeight = 90;
 
 /*
-	Auxiliary Relay #4 Options
-*/
-
-bool auxEnable = true; //Enable 4th Relay in Web UI, set true or false
-bool auxNC = true; //Sets visual indicator for Normally Closed
-const char *auxLabel = "Power Supply"; //Label for Auxiliary Relay
-
-
-/*
 	GPIO Pins to use
 	https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
 */
@@ -53,49 +44,44 @@ const char *auxLabel = "Power Supply"; //Label for Auxiliary Relay
 	1 1 0 A + B 	(LOW, LOW, HIGH)
 	0 0 1 Vertical 	(HIGH, HIGH, LOW)
 
-	Relay1 is connected normally closed to save power, no need to energize a relay in the default state.
-	Since Relay1 is connected to Normally Closed we need to flip Relay1 (LOW becomes HIGH).
 	Relays are activated with active low.
 */
 
 void loopA(){ // 1 0 0 Active Low
-	digitalWrite(Relay1, LOW); // NC Flipped
+	digitalWrite(Relay1, LOW); 
 	digitalWrite(Relay2, HIGH);
 	digitalWrite(Relay3, HIGH);
 	strcpy(activeMode, "A");
-	//Serial.println("Loop A");
 }
 
 void loopB(){ // 0 1 0 Active Low
-	digitalWrite(Relay1, HIGH); // NC Flipped
+	digitalWrite(Relay1, HIGH); 
 	digitalWrite(Relay2, LOW);
 	digitalWrite(Relay3, HIGH);
 	strcpy(activeMode, "B");
-	//Serial.println("Loop B");
 }
 
 void crossed(){ // 1 1 0 Active Low
-	digitalWrite(Relay1, LOW); // NC Flipped
+	digitalWrite(Relay1, LOW); 
 	digitalWrite(Relay2, LOW);
 	digitalWrite(Relay3, HIGH);
 	strcpy(activeMode, "Crossed");
-	//Serial.println("Crossed Parallel");
 }
 
 void vertical(){ // 0 0 1 Active Low
-	digitalWrite(Relay1, HIGH); // NC Flipped
+	digitalWrite(Relay1, HIGH); 
 	digitalWrite(Relay2, HIGH);
 	digitalWrite(Relay3, LOW);
 	strcpy(activeMode, "Vertical");
 }
 
 void off() {
-	digitalWrite(Relay4,LOW);
+	digitalWrite(Relay4,HIGH);
 	power = false;
 }
 
 void on() {
-	digitalWrite(Relay4,HIGH);
+	digitalWrite(Relay4,LOW);
 	power = true;
 }
 
@@ -113,7 +99,7 @@ void addString(JsonDocument *doc, String name, String value) {
 
 void getStatus(AsyncWebServerRequest *request) {
   StaticJsonDocument<1024> doc;
-  addBool(&doc,"D0",digitalRead(Relay1)); // NC Flipped
+  addBool(&doc,"D0",digitalRead(Relay1));
   addBool(&doc,"D1",digitalRead(Relay2));
   addBool(&doc,"D2",digitalRead(Relay3));
   addBool(&doc,"D3",digitalRead(Relay4));

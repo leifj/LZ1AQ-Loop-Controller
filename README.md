@@ -7,8 +7,9 @@ My fork of LZ1AQ loop controller mainly contains the following differences from 
 * no flipped NC relay
 * RESTful API
 * hyperscript+pico web
+* relay 4 always used for controlling power to the loop controller
 
-The rest of the readme is as I found it.
+The rest of the readme is as I found it. The screnshots no longer match because the UI is new. I may get around to new screnshots eventually.
 
 # LZ1AQ Loop Controller 🕹️
 
