@@ -1,0 +1,51 @@
+<html>
+   <head>
+      <title>loopcontroller</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <script src="/s/hyperscript.js"></script>
+      <link rel="stylesheet" href="/s/pico.min.css"/>
+   </head>
+   <body>
+      <main class="container">
+      <h1>Loop status</h1>
+      <div>
+         <form class="grid" _="on load
+                   repeat forever 
+                     send check to <fieldset/>
+                     wait 1s
+                   end
+                 end 
+                ">
+            <fieldset _="on check 
+                            fetch /api/status as an Object 
+                            put it into st
+                            send status(st:st) to .status">
+               <button type="button" class="outline status" _="on status(st) 
+                                                    if st.auto_unlock == 'true' remove .outline from me else add .outline to me end
+                                                 on click if me matches .outline fetch /api/enable as an Object else fetch /api/disable as an Object end
+                                                    send check to <fieldset/>" id="auto_unlock">Enabled</button>
+               <button type="button" class="outline status" _="on status(st)
+                                                    if st.active_key == 'true' remove .outline from me else add .outline to me end" id="active_key">Active</button>
+            </fieldset>
+         </form> 
+         <table>
+            <tbody>
+               <tr>
+                  <th>fwd</th>
+                  <td class="status" _="on status(st) log st set my innerHTML to st.fwd" id="fwd"></td>
+               </tr>
+               <tr>
+                  <th>rev</th>
+                  <td class="status" _="on status(st) set my innerHTML to st.rev" id="rev"></td>
+               </tr>
+               <tr>
+                  <th>vswr</th>
+                  <td class="status" _="on status(st) set my innerHTML to st.vswr" id="vswr"></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      </main>
+   </body>
+</html>

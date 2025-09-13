@@ -1,3 +1,15 @@
+
+# SA0LEF fork
+
+My fork of LZ1AQ loop controller mainly contains the following differences from the original:
+
+* port to platformio and refocus on esp32
+* no flipped NC relay
+* RESTful API
+* hyperscript+pico web
+
+The rest of the readme is as I found it.
+
 # LZ1AQ Loop Controller 🕹️
 
 I wanted to build a fully remotable LZ1AQ Active Antenna controller with off the shelf components. It is very cheap to buy ESP8266 MCUs and multi-channel relay boards online. Why reinvent the wheel? This project can be easily adapted to control remote antenna switches and other devices that can be controlled with relays.
